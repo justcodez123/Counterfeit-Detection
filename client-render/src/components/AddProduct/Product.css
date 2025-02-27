@@ -1,0 +1,231 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  .AddProduct {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative; /* Required for the overlay */
+    margin-top: -25px;
+  }
+  
+  /* Background Image with Overlay */
+  .AddProduct::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5; /* Adjust transparency */
+    z-index: -1; /* Place the background behind the content */
+  }
+  
+  .Component__title {
+    align-self: center;
+    margin-top: 5rem;
+    font-size: 2.5rem;
+    color: white; /* White text for better visibility */
+    /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Black shadow for better contrast */
+    margin-bottom: 20px;
+  }
+  
+  .Component__form {
+    /*background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */
+    padding: 20px;
+    border-radius: 10px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .form__content {
+    margin-bottom: 15px;
+  }
+  
+  .form__label {
+    display: block;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 5px;
+  }
+  
+  .form__input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    /*background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    transition: border-color 0.3s ease;
+  }
+  
+  .form__input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+
+  .qr_itself{
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  /* Button Styles */
+  
+  .button__toggleAP {
+    display: inline-block;
+    background-color: var(--first-color); /* Use your theme color */
+    color: black; /* White text */
+    padding: 0.75rem 1.5rem; /* Adequate padding */
+    border-radius: 0.5rem; /* Rounded corners */
+    font-weight: var(--font-medium);
+    font-size: 1rem; /* Consistent font size */
+    cursor: pointer;
+    border: none; /* Remove default border */
+    border-color: white;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Center the text inside the button */
+    max-width: 220px;
+    min-width: 230px;
+  }
+  
+  .button__toggleAP:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+    background-color: var(--first-color-alt); /* Darker shade on hover */
+  }
+
+  .button__toggleQR{
+    display: inline-block;
+    position: relative;
+    background-color: var(--first-color); /* Use your theme color */
+    color: black; /* White text */
+    padding: 0.75rem 1.5rem; /* Adequate padding */
+    border-radius: 0.5rem; /* Rounded corners */
+    font-weight: var(--font-medium);
+    font-size: 1rem; /* Consistent font size */
+    cursor: pointer;
+    border: none; /* Remove default border */
+    border-color: white;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Center the text inside the button */
+    align-content: center;
+    justify-items: center;
+  }
+
+  .button__toggleQR:focus {
+    outline: none;
+  }
+
+  .button__toggleQR:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+    background-color: var(--first-color-alt); /* Darker shade on hover */
+  }
+  
+  .form__button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* QR Code Section */
+  .qrcode__container {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    opacity: 0.9;
+  }
+  
+  .input__group {
+    margin-top: 15px;
+  }
+  
+  .input__group label {
+    display: block;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .input__group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    transition: border-color 0.3s ease;
+  }
+  
+  .input__group input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  
+  .input__group button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .input__group button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+  }
+  
+  .input__group button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Status Messages */
+  .AddProduct p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .AddProduct h2 {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    margin-top: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .Component__title {
+      font-size: 2rem;
+    }
+  
+    .Component__form {
+      padding: 15px;
+      max-width: 90%;
+    }
+  
+    .form__label, .form__input, .input__group label, .input__group input {
+      font-size: 1rem;
+    }
+  }

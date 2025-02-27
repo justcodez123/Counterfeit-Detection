@@ -1,0 +1,57 @@
+.VerifyProduct {
+    position: relative;
+    margin-left: 250px;
+}
+
+/* Title Styles with Smooth Animation */
+.Component__titleVP {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    position: relative;
+    align-self: center;
+    margin-left: 100px;
+    margin-top: 5rem;
+    font-size: 2.5rem;
+    color: white; /* White text for better visibility */
+    margin-bottom: 20px;
+    opacity: 0; /* Start invisible */
+    transform: translateY(20px); /* Start slightly lower */
+    animation: fadeSlideIn 1s ease-out forwards; /* Apply animation */
+}
+
+/* Button Styles */
+.button__toggleVP {
+    display: inline-block;
+    background-color: var(--first-color); /* Use your theme color */
+    color: black; /* Text color */
+    padding: 0.75rem 1.5rem; /* Adequate padding */
+    border-radius: 0.5rem; /* Rounded corners */
+    font-weight: var(--font-medium);
+    font-size: 1rem; /* Consistent font size */
+    cursor: pointer;
+    border: none; /* Remove default border */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+    width: 200px; /* Fixed width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Center text inside the button */
+    margin-left: 5px;
+}
+
+.button__toggleVP:hover {
+    background-color: var(--second-color); /* Change color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Fade & Slide-In Animation */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

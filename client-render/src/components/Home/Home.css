@@ -1,0 +1,131 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif; /* Modern & clean font */
+  color: #ffffff;
+  background-color: #121212;
+}
+
+/* Home Container */
+.Home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+/* Background Image with Overlay */
+.Home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://source.unsplash.com/1600x900/?technology,blockchain') no-repeat center center/cover;
+  filter: brightness(40%);
+  z-index: -1;
+}
+
+/* Title */
+.Component__title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
+  margin-bottom: 15px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Description */
+.Home__description {
+  max-width: 80%;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.Home__description p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #f0f0f0;
+}
+
+/* Warning Text */
+.Home__warning {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+/* Instructions */
+.Home__instructions ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.Home__instructions li {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+/* Link Styles */
+.Home__link {
+  color: #58a6ff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.Home__link:hover {
+  color: #1f7edc;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Component__title {
+      font-size: 2.5rem;
+  }
+
+  .Home__description {
+      max-width: 90%;
+      padding: 20px;
+  }
+
+  .Home__description p,
+  .Home__instructions li {
+      font-size: 1rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
