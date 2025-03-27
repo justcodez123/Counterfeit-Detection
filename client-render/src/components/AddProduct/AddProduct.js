@@ -2,7 +2,44 @@ import { useState, useRef, useEffect } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import './Product.css';
 
-const AddProduct = ({account, central}) => {
+const AddProduct = ({central}) => {
+
+    const [account, setAccount] = useState(null);
+
+    useEffect(() => {
+        async function fetchAccount() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        setAccount(accounts[0]);
+                    }
+                } catch (error) {
+                    console.error("Error fetching accounts:", error);
+                }
+            }
+        }
+
+        fetchAccount();
+
+        const handleAccountsChanged = (accounts) => {
+            setAccount(accounts.length > 0 ? accounts[0] : null);
+        };
+
+
+        window.ethereum?.on("accountsChanged", handleAccountsChanged);
+
+        // Listen for account changes
+        window.ethereum?.on("accountsChanged", (accounts) => {
+            setAccount(accounts.length > 0 ? accounts[0] : null);
+        });
+
+        return () => {
+            window.ethereum?.removeListener("accountsChanged", setAccount);
+        };
+    }, []);
+
+
 
     const [companyContractAddress, setCompanyContractAddress] = useState('');
     const [productId, setProductId] = useState('');

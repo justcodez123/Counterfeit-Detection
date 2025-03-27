@@ -1,65 +1,104 @@
-import React, {useState } from 'react'
-import './CreateContract.css'
+import React, { useState, useEffect, useCallback } from "react";
+import { getCentralContract } from "./centralContract"; // Import contract helper
+import "./CreateContract.css";
 
-const DeployContract = ({account, central}) => {
-
+const DeployContract = ({ account: parentAccount }) => {
+    const [account, setAccount] = useState(parentAccount || null); // Local state for account
     const [contractAddress, setContractAddress] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [updateStatus, setUpdateStatus] = useState("");
 
-    const [updateStatus, setUpdateStatus] = useState(false);
+    // Fetch active account if not passed as prop
+    const fetchActiveAccount = async () => {
+        if (window.ethereum) {
+            const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            if (accounts.length > 0) {
+                setAccount(accounts[0]);
+            }
+        }
+    };
 
-    function showErrorMessage(error) {
-        setLoading(false);
-        alert(`An error occurred while connecting to MetaMask: ${error.message}`);
-    }
+    // Fetch contract address
+    const fetchContractAddress = useCallback(async () => {
+        try {
+            if (!account) {
+                setUpdateStatus("Please connect your wallet first.");
+                return;
+            }
 
+            const central = await getCentralContract();
+            if (!central) throw new Error("Central contract not found.");
 
-    const fetchContractAddress = async () => {
-        try{
-            if(account){
-                const address = await central.getCompanySmartContractAddress(account);
+            const address = await central.getCompanySmartContractAddress(account);
+            if (!address || address === "0x0000000000000000000000000000000000000000") {
+                setUpdateStatus("No contract found. Click 'Create Contract'.");
+                setContractAddress(null);
+            } else {
                 setContractAddress(address);
-            }else{
-                throw Error('Please check that you are connected to a wallet');
+                setUpdateStatus("Contract found at:");
             }
-        }catch(error){
+        } catch (error) {
             showErrorMessage(error);
         }
-    }
+    }, [account]);
 
+    // Fetch account on mount if not already set
+    useEffect(() => {
+        if (!account) {
+            fetchActiveAccount();
+        }
+    }, [account]);
 
-    const createContract = async() =>{
-        try{
-            if(account){
-                setUpdateStatus("Validate the transaction through your wallet");
-                let transaction = await central.createSmartContract();
-                setLoading(true);
-                await transaction.wait();
-                await fetchContractAddress();
-                setUpdateStatus("Contract created \n Address: ");
-                setLoading(false);
-            }else{
-                throw Error('Please check that you are connected to a wallet');
-            }
-        }catch(error){
+    // Fetch contract when account changes
+    useEffect(() => {
+        if (account) {
+            fetchContractAddress();
+        }
+    }, [account, fetchContractAddress]);
+
+    // Show error message in alert
+    const showErrorMessage = (error) => {
+        setLoading(false);
+        console.error("Error:", error);
+        alert(`An error occurred: ${error.message}`);
+    };
+
+    // Deploy a new contract
+    const createContract = async () => {
+        try {
+            if (!account) throw new Error("Please connect to MetaMask before creating a contract.");
+
+            setUpdateStatus("Validate the transaction through your wallet...");
+            setLoading(true);
+
+            const central = await getCentralContract();
+            if (!central) throw new Error("Central contract not found.");
+
+            const transaction = await central.createSmartContract();
+            await transaction.wait(); // Wait for transaction confirmation
+
+            await fetchContractAddress(); // Fetch updated contract address
+            setUpdateStatus("Contract created at:");
             setLoading(false);
+        } catch (error) {
             showErrorMessage(error);
         }
-        
-    }
-
+    };
 
     return (
-        <div className='DeployContract'>
-            <h3 className='Component__title'>Create My Contract</h3>
-            <button className='button__toggleCC form__button' onClick={createContract}>Create Contract</button>
-            {loading  ? (
-                <div>Transaction in progress... It can take a few minutes </div>
-                ) : ( 
-                <p>{updateStatus}{contractAddress}</p>
+        <div className="DeployContract">
+            <h3 className="Component__title">Create My Contract</h3>
+            <p>Connected Account: {account || "Not Connected"}</p>
+            <button className="button__toggleCC form__button" onClick={createContract}>
+                Create Contract
+            </button>
+            {loading ? (
+                <div>Transaction in progress... It can take a few minutes</div>
+            ) : (
+                <p>{updateStatus} {contractAddress}</p>
             )}
         </div>
-    )
-}
+    );
+};
 
 export default DeployContract;

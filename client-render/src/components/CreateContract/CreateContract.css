@@ -50,14 +50,13 @@
 .button__toggleCC {
     display: inline-block;
     background-color: var(--first-color); /* Use your theme color */
-    color: #fff; /* White text */
+    color: white; /* White text */
     padding: 0.75rem 1.5rem; /* Adequate padding */
     border-radius: 0.5rem; /* Rounded corners */
     font-weight: var(--font-medium);
     font-size: 1rem; /* Consistent font size */
     cursor: pointer;
     border: none; /* Remove default border */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
     width: 200px; /* Fixed width to prevent elongation */
     position: relative;
     align-items: center;
@@ -65,9 +64,12 @@
     justify-self: center;
     text-align: center; /* Center the text inside the button */
     margin-left: 100px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
   }
   
   .button__toggleCC:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
     background-color: var(--first-color-alt); /* Darker shade on hover */
   }
   
