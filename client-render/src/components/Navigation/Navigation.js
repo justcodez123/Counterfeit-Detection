@@ -79,7 +79,7 @@ const Navigation = ({ account, setAccount }) => {
             <button className='nav__link button__toggleA' onClick={() => navigate('/AddProduct')}>Add Products</button>
           </li>
           <li className='nav__item'>
-            {/* <button className='nav__link button__toggleV' onClick={() => navigate('/VerifyProduct')}>Verify Product</button> */}
+            <button className='nav__link button__toggleV' onClick={() => navigate('/VerifyProduct')}>Verify Product</button>
           </li>
           <li>
             {account ? (
