@@ -1,46 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { ethers } from "ethers";
+
 import { QRCodeCanvas } from "qrcode.react";
+import central_contract from "./Contractdata.json"; // Import ABI & Address
 import './Product.css';
 
-const AddProduct = ({central}) => {
-
+const AddProduct = () => {
     const [account, setAccount] = useState(null);
-
-    useEffect(() => {
-        async function fetchAccount() {
-            if (window.ethereum) {
-                try {
-                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-                    if (accounts.length > 0) {
-                        setAccount(accounts[0]);
-                    }
-                } catch (error) {
-                    console.error("Error fetching accounts:", error);
-                }
-            }
-        }
-
-        fetchAccount();
-
-        const handleAccountsChanged = (accounts) => {
-            setAccount(accounts.length > 0 ? accounts[0] : null);
-        };
-
-
-        window.ethereum?.on("accountsChanged", handleAccountsChanged);
-
-        // Listen for account changes
-        window.ethereum?.on("accountsChanged", (accounts) => {
-            setAccount(accounts.length > 0 ? accounts[0] : null);
-        });
-
-        return () => {
-            window.ethereum?.removeListener("accountsChanged", setAccount);
-        };
-    }, []);
-
-
-
+    const [contract, setContract] = useState(null);
     const [companyContractAddress, setCompanyContractAddress] = useState('');
     const [productId, setProductId] = useState('');
     const [manufactureId, setManufactureId] = useState('');
@@ -49,24 +16,43 @@ const AddProduct = ({central}) => {
     const [loading, setLoading] = useState(false);
     const [updateStatus, setUpdateStatus] = useState('');
     const [qrValue, setQrValue] = useState('');
-    
+
     const qrRef = useRef();
 
     useEffect(() => {
-        // Update QR value whenever form data changes
-        setQrValue(JSON.stringify({
-            companyContractAddress,
-            productId,
-            manufactureId,
-            productName,
-            productBrand
-        }));
-    }, [companyContractAddress, productId, manufactureId, productName, productBrand]);
+        // Connect to MetaMask and load contract
+        async function loadBlockchainData() {
+            if (window.ethereum) {
+                try {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum); const signer = await provider.getSigner();
+                    const accounts = await window.ethereum.request({ method: "eth_accounts" });
 
-    const showErrorMessage = (error) => {
-        setLoading(false);
-        alert(`An error occurred while connecting to MetaMask: ${error.message}`);
-    };
+                    if (accounts.length > 0) {
+                        setAccount(accounts[0]);
+
+                        // Load contract
+                        const deployedContract = new ethers.Contract(central_contract.address, central_contract.abi, signer);
+                        setContract(deployedContract);
+                    }
+                } catch (error) {
+                    console.error("Error loading blockchain data:", error);
+                }
+            }
+        }
+
+        loadBlockchainData();
+
+        // Listen for account changes
+        window.ethereum?.on("accountsChanged", (accounts) => {
+            setAccount(accounts.length > 0 ? accounts[0] : null);
+        });
+
+    }, []);
+
+    useEffect(() => {
+        // Update QR value when form data changes
+        setQrValue(JSON.stringify({ companyContractAddress, productId, manufactureId, productName, productBrand }));
+    }, [companyContractAddress, productId, manufactureId, productName, productBrand]);
 
     const handleInputChange = (setter) => (e) => setter(e.target.value);
 
@@ -76,28 +62,36 @@ const AddProduct = ({central}) => {
         let image = canvas.toDataURL("image/png");
         let anchor = document.createElement("a");
         anchor.href = image;
-        anchor.download = `qr-code.png`;
+        anchor.download = "qr-code.png";
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
     };
 
     const addProducts = async () => {
+        if (!contract) {
+            alert("Contract not loaded. Please check your wallet connection.");
+            return;
+        }
+
         try {
             const list = JSON.parse("[" + productId + "]");
-            if(account && companyContractAddress && list){
+            if (account && companyContractAddress && list) {
                 setUpdateStatus("Validate the transaction through your wallet");
-                let transaction = await central.addproduct(account, companyContractAddress, list);
                 setLoading(true);
+
+                let transaction = await contract.addproduct(account, companyContractAddress, list);
                 await transaction.wait();
-                setUpdateStatus("Products Added");
-                setLoading(false);
+
+                setUpdateStatus("✅ Products Added Successfully!");
             } else {
-                throw Error('Please check that you are connected to a wallet, and that you have provided all the fields');
+                throw new Error("Please check that you are connected to a wallet and have provided all the fields.");
             }
-        } catch(error) {
-            console.log(error);
-            showErrorMessage(error);
+        } catch (error) {
+            console.error(error);
+            alert(`❌ Error: ${error.message}`);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -111,52 +105,34 @@ const AddProduct = ({central}) => {
                 </div>
                 <div className='form__content'>
                     <label className='form__label'>Enter Product ID</label>
-                    <input type="text"  className='form__input' value={productId} onChange={handleInputChange(setProductId)} />
+                    <input type="text" className='form__input' value={productId} onChange={handleInputChange(setProductId)} />
                 </div>
                 <div className='form__content'>
                     <label className='form__label'>Enter Manufacture ID</label>
-                    <input type="text"  className='form__input' value={manufactureId} onChange={handleInputChange(setManufactureId)} />
+                    <input type="text" className='form__input' value={manufactureId} onChange={handleInputChange(setManufactureId)} />
                 </div>
                 <div className='form__content'>
                     <label className='form__label'>Enter Product Name</label>
-                    <input type="text"  className='form__input' value={productName} onChange={handleInputChange(setProductName)} />
+                    <input type="text" className='form__input' value={productName} onChange={handleInputChange(setProductName)} />
                 </div>
                 <div className='form__content'>
                     <label className='form__label'>Enter Product Brand</label>
-                    <input type="text"  className='form__input' value={productBrand} onChange={handleInputChange(setProductBrand)} />
+                    <input type="text" className='form__input' value={productBrand} onChange={handleInputChange(setProductBrand)} />
                 </div>
-                <button className='button__toggleAP form__button' onClick={addProducts}>Add Product</button>
-                { account ? (
-                    <>
-                        {loading  ? (
-                            <div>Transaction in progress..... It can take a few minutes</div>
-                        ) : ( 
-                            <p>{updateStatus}</p>
-                        )}
-                    </>
-                ) : (
-                    <h2>Connect to a crypto wallet first.......</h2>
-                )}
+                <button className='button__toggleAP form__button' onClick={addProducts} disabled={loading}>
+                    {loading ? "Adding..." : "Add Product"}
+                </button>
+                <p>{updateStatus}</p>
             </div>
 
-            {/* QR Code Section */}
             <div className="qrcode__container">
                 <div ref={qrRef} className="qr_itself">
-                    <QRCodeCanvas
-                        id="qrCode"
-                        value={qrValue}
-                        size={300}
-                        bgColor={"#ffffff"}
-                        level={"H"}
-                    />
-                </div >
-                <div>
-                    <button onClick={downloadQRCode} disabled={!qrValue} className="button__toggleQR">
-                        Download QR code
-                    </button>
+                    <QRCodeCanvas value={qrValue} size={300} bgColor={"#ffffff"} level={"H"} />
                 </div>
-                
-            </div>    
+                <button onClick={downloadQRCode} disabled={!qrValue} className="button__toggleQR">
+                    Download QR code
+                </button>
+            </div>
         </div>
     );
 };
