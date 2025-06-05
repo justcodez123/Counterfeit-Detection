@@ -1,5 +1,6 @@
-import {useState } from 'react'
-import './GetContract.css'
+import {useState} from 'react';
+import DeployContract from '../CreateContract/CreateContract';
+import './GetContract.css';
 
 const GetContract = ({ account, central }) => {
     const [contractAddress, setContractAddress] = useState('');

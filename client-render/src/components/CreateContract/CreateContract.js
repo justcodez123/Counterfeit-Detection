@@ -35,7 +35,7 @@ const DeployContract = ({ account: parentAccount }) => {
                 setContractAddress(null);
             } else {
                 setContractAddress(address);
-                setUpdateStatus("Contract found at:");
+                setUpdateStatus("Contract found at :");
             }
         } catch (error) {
             showErrorMessage(error);
@@ -78,7 +78,7 @@ const DeployContract = ({ account: parentAccount }) => {
             await transaction.wait(); // Wait for transaction confirmation
 
             await fetchContractAddress(); // Fetch updated contract address
-            setUpdateStatus("Contract created at:");
+            setUpdateStatus("Contract created at :");
             setLoading(false);
         } catch (error) {
             showErrorMessage(error);
@@ -88,15 +88,17 @@ const DeployContract = ({ account: parentAccount }) => {
     return (
         <div className="DeployContract">
             <h3 className="Component__title">Create My Contract</h3>
-            <p>Connected Account: {account || "Not Connected"}</p>
             <button className="button__toggleCC form__button" onClick={createContract}>
                 Create Contract
             </button>
-            {loading ? (
-                <div>Transaction in progress... It can take a few minutes</div>
-            ) : (
-                <p>{updateStatus} {contractAddress}</p>
-            )}
+            <div className="Component__info">
+                <p className="Component__account">Connected Account : {account || "Not Connected"}</p>
+                {loading ? (
+                    <div>Transaction in progress... It can take a few minutes</div>
+                ) : (
+                    <p className="Component__address">{updateStatus} {contractAddress}</p>
+                )}
+            </div>
         </div>
     );
 };

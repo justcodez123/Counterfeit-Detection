@@ -78,3 +78,34 @@
     justify-self: center; /* Center the button horizontally */
     margin-top: 1rem; /* Add some spacing above the button */
   }
+
+  .Component__info {
+    position: relative;
+    margin-top: 55px;
+    margin-left: -80px;
+    width: 90%;                       /* Prevent full screen stretch */
+    max-width: 625px;                 /* Optional: limit maximum width */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;          /* Ensures padding doesn't add to width */
+    color: white;         
+}
+
+.Component__account{
+    position: relative;
+    color: white; /* Dark text for better visibility */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); /* White shadow for better contrast */
+    display: flex;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.Component__address {
+    position: relative;
+    color: white; /* Dark text for better visibility */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); /* White shadow for better contrast */
+    display: flex;
+    margin-left: 10px;
+    margin-top: 15px;
+}

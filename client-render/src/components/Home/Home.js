@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
@@ -17,10 +17,11 @@ function Home() {
 
             <div className="Home__instructions">
                 <ul>
-                    <li>To create a smart contract for your organization, visit: <Link className='Home__link' to="/CreateContract">Create Contract</Link></li>
-                    <li>To fetch the smart contract address linked to a wallet, visit: <Link className='Home__link' to="/GetContract">Fetch Address</Link></li>
-                    <li>To add products to your contract, visit: <Link className='Home__link' to="/AddProduct">Add Products</Link></li>
-                    <li>To verify product authenticity, visit: <Link className='Home__link' to="/VerifyProduct">Verify Product</Link></li>
+                    <li className='Home__warning'>  Instructions : </li>
+                    <li>1. You Need to Have MetaMask Installed.</li>
+                    <li>2. You need to create a contract first, for each of the Product, You can do it by clicking on the Create Contract Button on the Navigation Bar.</li>
+                    <li>3. After Contract Creation, Make Sure to Add Products, You can do it by clicking on the Add Product Button on the Navigation Bar.</li>
+                    <li>4. After Adding the Product, You can Verify the Product by clicking on the Verify Product Button on the Navigation Bar.</li>    
                 </ul>
             </div>
         </div>

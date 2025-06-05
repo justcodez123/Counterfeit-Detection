@@ -100,7 +100,7 @@ const AddProduct = () => {
             <h3 className='Component__title'>Add Products</h3>
             <div className='Component__form'>
                 <div className='form__content'>
-                    <label className='form__label'>Enter Company contract address</label>
+                    <label className='form__label'> Contract Address</label>
                     <input type="text" className='form__input' value={companyContractAddress} onChange={handleInputChange(setCompanyContractAddress)} />
                 </div>
                 <div className='form__content'>

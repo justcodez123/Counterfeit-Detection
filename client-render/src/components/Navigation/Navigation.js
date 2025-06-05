@@ -63,18 +63,20 @@ const Navigation = ({ account, setAccount }) => {
 
   return (
     <nav className='nav container'>
-      <a href="/" className="nav__logo">Product Verifier</a>
       <div className='nav__menu'>
         <ul className='nav__list grid'>
+        <li className='nav__item1'>
+            <text className='nav__logo'>Product Registry</text>
+        </li>
           <li className='nav__item'>
             <button className='nav__link button__toggleH' onClick={() => navigate('/')}>Home</button>
           </li>
           <li className='nav__item'>
             <button className='nav__link button__toggleC' onClick={() => navigate('/CreateContract')}>Create Contract</button>
           </li>
-          <li className='nav__item'>
+          {/* <li className='nav__item'>
             <button className='nav__link button__toggleF' onClick={() => navigate('/GetContract')}>Fetch Contract</button>
-          </li>
+          </li> */}
           <li className='nav__item'>
             <button className='nav__link button__toggleA' onClick={() => navigate('/AddProduct')}>Add Products</button>
           </li>

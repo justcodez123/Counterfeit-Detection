@@ -1,0 +1,53 @@
+.auth-container {
+    margin-top: 200px;
+    padding: 24px;
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .auth-title {
+    text-align: center; 
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .auth-status {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .qr-scanner {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .product-info-box {
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .product-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .product-list li {
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+  }

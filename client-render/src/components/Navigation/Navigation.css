@@ -2,9 +2,15 @@
     position: relative;
     color: white; /* Dark text for better visibility */
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); /* White shadow for better contrast */
-    margin-bottom: 10px;
+    font-size: 1 rem;
 }
 
+.Component__title{
+    font-size: 2.5rem;
+    color: white; /* Dark text for better visibility */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); /* White shadow for better contrast */
+    margin-bottom: 20px;
+} 
 
 .button__toggleMetamask{
     background-color: #FF7F50; /* MetaMask orange */
@@ -19,7 +25,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -43,11 +48,6 @@
     background-position: center;
 }
 
-.button__toggleH{
-    position: relative;
-    size: 48px;
-    height: 7.6vh;
-}
 
 .button__toggleH,
 .button__toggleA,
@@ -55,15 +55,18 @@
 .button__toggleC,
 .button__toggleV{
     position: relative;
-    background-color: rgba(106, 203, 113, 0.642);
+    background-color: transparent;
     color: white;
-    font-weight: bold;
-    padding: 10px 20px;
+    text-decoration: underline white  2px ;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    transition: background 0.3s ease;
 }
 
 .button__toggleH:hover,
@@ -71,7 +74,7 @@
 .button__toggleF:hover,
 .button__toggleC:hover,
 .button__toggleV:hover{
-    background-color: #2980b9;
+    background-color: rgba(255, 255, 255, 0.269);
     transform: scale(1.05);
 }
 
@@ -81,13 +84,27 @@
 .button__toggleC:disabled,
 .button__toggleV:disabled{
     background-color: #ccc;
-    cursor: not-allowed;
 
 }
 
-.Component__title{
-    font-size: 2.5rem;
-    color: white; /* Dark text for better visibility */
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8); /* White shadow for better contrast */
-    margin-bottom: 20px;
-} 
+nav 
+{
+    display: flex;
+    gap: 24px;
+    background-color: #111; /* or match your theme */
+    padding: 16px 32px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid white;
+}
+
+.nav__item1{
+    font-family: serif;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: large;
+}
+
+
